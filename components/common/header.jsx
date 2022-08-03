@@ -3,7 +3,7 @@ function Header() {
 		<header>
 			<div className="container even-columns small-gap">
 				<a className="even-columns logo small-gap" href="/">
-					<div className="circle"></div>
+					<img className="circle" alt="logo" src="/images/logo.svg" />
 					PIXELPLAZA
 				</a>
 				<input type="text" placeholder="⌕ Search" className="search-bar"></input>
