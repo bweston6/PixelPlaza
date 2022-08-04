@@ -1,5 +1,6 @@
 // import styles from '../styles/Home.module.css'
 import Head from "next/head";
+import Link from "next/link";
 
 function Home() {
 	return (
@@ -104,7 +105,9 @@ function Home() {
 					</div>
 				</div>
 				<div className="container margin">
-					<a className="button" href="/browse.html">Browse Now</a>
+					<Link href="/browse">
+						<a className="button">Browse Now</a>
+					</Link>
 				</div>
 				<div className="container">
 					<h3>We Promote the Little Guy</h3>
@@ -115,7 +118,9 @@ function Home() {
 					facilisis neque. Nulla mattis odio vitae tortor. Fusce iaculis. Aliquam
 					rhoncus, diam quis tincidunt facilisis, sem quam luctus augue, ut posuere
 					neque sem vitae neque.</p>
-					<a className="button" href="/create.html">Create Now</a>
+					<Link href="/create">
+						<a className="button">Create Now</a>
+					</Link>
 				</div>
 			</section>
 			<section>
@@ -138,11 +143,11 @@ function Home() {
 					<i style={{ fontSize: "96px" }} className="fa-solid fa-hand-holding-dollar"></i>
 				</div>
 			</section>
-			<section className="solana">
+			<section className="polygon">
 				<div className="container even-columns center">
-					<img alt="solana logo" src="/images/solana.svg"/>
+					<img style={{width: "96px", aspectRatio: "1"}} alt="polygon logo" src="/images/polygon.svg"/>
 					<div className="wrap-text">
-						<h2>Backed by Solana</h2>
+						<h2>Backed by Polygon & Etherium</h2>
 						<p>Proin tempus diam ut ligula. Mauris dictum, metus dapibus iaculis
 						sollicitudin, leo ligula cursus sem, eu congue metus ligula sed justo.
 						Suspendisse potenti. Donec sodales elementum turpis. Duis dolor elit,
@@ -183,7 +188,9 @@ function Home() {
 							Nunc luctus bibendum velit.</p>
 
 							<p>Aliquam aliquam dolor at.</p>
-							<a className="button" href="/login.html">Sign Up</a>
+							<Link href="/login">
+								<a className="button">Sign Up</a>
+							</Link>
 						</div>
 						<div className="box wrap-text">
 							<h3>Uploading Your Art</h3>
@@ -192,13 +199,15 @@ function Home() {
 							Nunc luctus bibendum velit.</p>
 
 							<p>Aliquam aliquam dolor at.</p>
-							<a className="button" href="/create.html">Create</a>
+							<Link href="/create">
+								<a className="button">Create</a>
+							</Link>
 						</div>
 					</div>
 				</div>
 			</section>
 		</main>
-	);
+	)
 }
 
 export default Home
