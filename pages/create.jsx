@@ -1,48 +1,88 @@
-<!DOCTYPE html>
-<html lang="en-GB">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Pixel NFT | Home</title>
-		<meta name="color-scheme" content="dark light">
-		<link rel="stylesheet" href="/styles.css">
-		<script type="text/javascript" src="/script.js"></script>
-		<script src="https://kit.fontawesome.com/b1e088a62d.js" crossorigin="anonymous"></script>
-	</head>
-	<body>
-		<header>
-			<div class="container even-columns small-gap">
-				<a class="even-columns logo small-gap" href="/">
-					<div class="circle"></div>
-					PIXELPLAZA
-				</a>
-				<input type="text" placeholder="⌕ Search" class="search-bar"></input>
-				<nav class="primary-navigation" aria-label="primary">
-					<ul class="even-columns small-gap" role="list">
-						<li><a href="/browse.html">Browse</a></li>
-						<li><a href="/create.html">Create</a></li>
-						<li><a href="/login.html"><i class="fa-solid fa-user-large clr-accent-yellow"></i></a></li>
-					</ul>
-				</nav>
-			</div>
-		</header>
+import Head from "next/head";
+
+const iframeStyle = {
+	height: "80vh",
+	borderStyle: "none",
+	width: "min(calc(var(--body-width) + 10rem), calc(100% - 2rem))",
+	marginInline: "max(calc(var(--padding-width) - 5rem), 1rem)",
+}
+
+function Create() {
+	return (
 		<main>
-		</main>
-		<footer>
-			<div class="container even-columns">
-				<div>
-					Copyright © 2022 PixelNFT
+			<Head>
+				<title>PixelPlaza NFT | Create</title>
+			</Head>
+			<section>
+				<div className="container">
+					<h2>Draw</h2>
+					<p>Download the image as a PNG when you are finished.</p>
 				</div>
-				<nav class="secondary-navigation" aria-label="secondary">
-					<ul class="even-columns small-gap" role="list">
-						<li><a href="#"><i class="fa-brands fa-instagram"></a></i></li>
-						<li><a href="#"><i class="fa-brands fa-tiktok"></a></i></li>
-						<li><a href="#"><i class="fa-brands fa-twitter"></a></i></li>
-						<li><a href="#">Privacy Policy</a></li>
-						<li><a href="#">Terms of Service</a></li>
-					</ul>
-				</nav>
-			</div>
-		</footer>
-	</body>
-</html>
+				<iframe className="margin" scrolling="no" style={iframeStyle} src="https://pixilart.com/draw" />
+			</section>
+			<section className="container">
+				<h2>Create</h2>
+				<form>
+					<style jsx>{`
+						form {
+							display: flex;
+							flex-direction: column;
+							margin-inline: auto;
+							gap: 1rem;
+							margin-block: 2rem;
+							width: min(100%, calc(var(--body-width) / 2));
+						}
+						form h3,
+						input[type="submit"] {
+							margin-block: .5rem;
+						}
+						input[type="text"],
+						textarea {
+							font-size: 1rem;
+							width: 100%;
+							padding: 0.5rem;
+							border: var(--clr-grey-300) 1px solid;
+							border-radius: .5rem;
+							font-family: system-ui;
+						}
+						input[type="file"] {
+							display: none;
+						}
+						label[for="upload"] {
+							cursor: pointer;
+							max-width: 100%;
+							width: 15rem;
+							aspect-ratio: 1;
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							border: var(--clr-grey-900) dashed .3rem;
+							border-radius: 1rem;
+							font-size: 2rem;
+						}
+					`}</style>
+					<h3>Image</h3>
+					<label htmlFor="upload">
+						<i className="fa-solid fa-upload"/>
+						<input id="upload" type="file"/>
+					</label>
+					<label>
+						<h3>Name</h3>
+						<input type="text" placeholder="Image name"/>
+					</label>
+					<label>
+						<h3>External link</h3>
+						<input type="text" placeholder="www.example.com"/>
+					</label>
+					<label>
+						<h3>Description</h3>
+						<textarea placeholder="Provide a description of your image."/>
+					</label>
+					<input type="submit" value="Upload" className="button"/>
+				</form>
+			</section>
+		</main>
+	)
+}
+
+export default Create;
