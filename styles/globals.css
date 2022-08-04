@@ -26,7 +26,7 @@ section {
 
 /* Properties */
 :root {
-	--body-width: 100ch;
+	--body-width: 65rem;
 	--clr-accent-blue: hsl(172, 23%, 68%);
 	--clr-accent-gradient: radial-gradient(circle at 50% 120%, var(--clr-accent-yellow) 0%, var(--clr-grey-300) 80%);
 	--clr-accent-salmon: hsl(7, 80%, 64%);
@@ -90,8 +90,8 @@ body {
 	flex-direction: column;
 	justify-content: space-between;
 }
-main {
-	flex: 1 0 auto;
+body > #__next {
+  flex: 1 0 auto;
 }
 
 
@@ -203,6 +203,11 @@ main {
 }
 .solana {
 	background: linear-gradient(45deg, hsla(267, 100%, 25%, 1) 0%, hsla(155, 89%, 25%, 1) 100%);
+	color: white;
+}
+
+.polygon {
+	background: linear-gradient(135deg, rgba(232, 69, 69, 1) 0%, rgba(123, 63, 228, 1) 100%);
 	color: white;
 }
 .wrap-text {
