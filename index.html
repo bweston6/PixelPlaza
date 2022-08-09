@@ -6,16 +6,56 @@
 		<title>Pixel Plaza NFT</title>
 		<meta name="color-scheme" content="dark light">
 		<link rel="stylesheet" href="/styles.css">
+		<script src="https://kit.fontawesome.com/b1e088a62d.js" crossOrigin="anonymous"></script>
+		<script src="/pixel-banner.js"></script>
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+		<link rel="manifest" href="/site.webmanifest">
+		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#fcce64">
+		<meta name="apple-mobile-web-app-title" content="PixelPlaza">
+		<meta name="application-name" content="PixelPlaza">
+		<meta name="msapplication-TileColor" content="#fcce64">
+		<meta name="theme-color" content="#fcce64">
 	</head>
 	<body>
+		<div class="background" id="background">
+			<script>
+				new PixelBanner({
+					target: "#background",
+					dynamic_options: {
+						update_interval: 100,
+					},
+					pixel_options:{
+						border: {width: 1, color: "#262626"},
+						color_pallete: ["#9BC0BB", "#ED6B5A", "#FCE864"],
+						probability: {y_axis: "distance"},
+					},
+				});
+			</script>
+		</div>
 		<main>
-			<div clas="brand">
-				<img src="logo.svg" alt="logo" />
+			<div class="brand">
+				<img class="logo" src="logo.svg" alt="logo" />
 				<h1>PixelPlaza</h1>
 			</div>
 			<p>
-			Coming September 2022
+			Coming Late September 2022
 			</p>
 		</main>
+		<footer>
+			<div class="container even-columns">
+				<div>
+					Copyright © 2022 PixelPlaza
+				</div>
+				<nav class="secondary-navigation" aria-label="secondary">
+					<ul class="even-columns small-gap" role="list">
+						<li><a href="https://www.instagram.com/pixelplaza.io"><i class="fa-brands fa-instagram"></i></a></li>
+						<li><a href="https://www.tiktok.com/@pixelplaza.io"><i class="fa-brands fa-tiktok"></i></a></li>
+						<li><a href="https://twitter.com/PixelPlaza_io"><i class="fa-brands fa-twitter"></i></a></li>
+					</ul>
+				</nav>
+			</div>
+		</footer>
 	</body>
 </html>
