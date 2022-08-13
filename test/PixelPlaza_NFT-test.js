@@ -51,17 +51,19 @@ describe("PixelPlaza_NFT", function () {
 		// fetch market items
 		let items = await market.fetchMarketItems();
 
-		items = await Promise.all(items.map(async i => {
-			const tokenUri = await nft.tokenURI(i.tokenId);
-			let item = {
-				price: i.price.toString(),
-				tokenId: i.tokenId.toString(),
-				seller: i.seller,
-				owner: i.owner,
-				tokenUri
-			}
-			return item;
-		}));
+		// todo - why is this fetched manually when it is just fetched here ^
+		//
+		// items = await Promise.all(items.map(async i => {
+		//	const tokenUri = await nft.tokenURI(i.tokenId);
+		// 	let item = {
+		// 		price: i.price.toString(),
+		// 		tokenId: i.tokenId.toString(),
+		// 		seller: i.seller,
+		// 		owner: i.owner,
+		// 		tokenUri
+		// 	}
+		// 	return item;
+		// }));
 
 		console.log('items: ', items);
 	});
