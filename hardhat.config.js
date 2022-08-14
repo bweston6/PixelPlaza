@@ -1,7 +1,7 @@
 require("@nomicfoundation/hardhat-toolbox");
 require("@nomicfoundation/hardhat-chai-matchers");
 
-// change me to the final business account and read from env var
+// todo - change me to the final business account and read from env var
 const ACCOUNT_PK = "dbee0892ed2bd982f27b53aac17defcd3c35664fd8b80d7605cd02c95a09894d"
 
 /** @type import('hardhat/config').HardhatUserConfig */

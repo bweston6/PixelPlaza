@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: MIT
-// todo - types are not congruent, mixing of uint and uint256
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
@@ -14,19 +13,19 @@ contract PixelPlaza_NFT is ReentrancyGuard {
 
 	/* Owner */
 
-	address payable owner; // owner of the smart contract
+	address payable pixelplaza; // owner of the smart contract
 
 	constructor(){
-		owner = payable(msg.sender);
+		pixelplaza = payable(msg.sender);
 	}
 
 
 	/* Listing Price */
 
-	uint256 listingPrice; // people have to pay to buy their NFT on this marketplace
+	uint listingPrice; // people have to pay to buy their NFT on this marketplace
 
 	/// @notice get the listingprice
-	function getListingPrice() public view returns (uint256){
+	function getListingPrice() public view returns (uint){
 		return listingPrice;
 	}
 
@@ -44,38 +43,38 @@ contract PixelPlaza_NFT is ReentrancyGuard {
 	struct MarketItem {
 		uint itemId;
 		address nftContract;
-		uint256 tokenId;
+		uint tokenId;
 		address payable seller; // person selling the nft
 		address payable owner; // owner of the nft
-		uint256 price;
+		uint price;
 		bool sold;
 	}
 
 	// access the MarketItem via itemId
-	mapping(uint256 => MarketItem) private idMarketItem;
+	mapping(uint => MarketItem) private idMarketItem;
 
 	// log message (when Item is sold)
 	event MarketItemCreated (
 		uint indexed itemId,
 		address indexed nftContract,
-		uint256 indexed tokenId,
+		uint indexed tokenId,
 		address  seller,
 		address  owner,
-		uint256 price,
+		uint price,
 		bool sold
 	);
 
 	/// @notice function to create market item
 	function createMarketItem(
 		address nftContract,
-		uint256 tokenId,
-		uint256 price
+		uint tokenId,
+		uint price
 	) public payable nonReentrant {
 		require(price > 0, "Price must be above zero");
 		require(msg.value == listingPrice, "Price must be equal to listing price"); // todo - commented out?
 
 		_itemIds.increment(); // add 1 to the total number of items ever created
-		uint256 itemId = _itemIds.current();
+		uint itemId = _itemIds.current();
 
 		idMarketItem[itemId] = MarketItem(
 			itemId,
@@ -102,16 +101,24 @@ contract PixelPlaza_NFT is ReentrancyGuard {
 		);
 	}
 
+	/*
+		owner: person who minted it (check thiis)
+		listingPrice: owner's cut
+
+		seller: current seller
+		price: sellers cut
+	 */
+
 	/// @notice function to create a sale
 	function createMarketSale(
 		address nftContract,
-		uint256 itemId
+		uint itemId
 	) public payable nonReentrant {
 		uint price = idMarketItem[itemId].price;
 		uint tokenId = idMarketItem[itemId].tokenId;
 		uint listingNumerator = 25; // todo - explain through this, to ensure pricing and commission is correct
 		uint listingDenominator = 1000;
-		setListingPrice(idMarketItem[itemId].price * listingNumerator / listingDenominator);
+		setListingPrice(idMarketItem[itemId].price * listingNumerator / listingDenominator); // take 2.5% cut
 		require(msg.value == price, "Please submit the asking price in order to complete purchase");
 
 		// pay the seller the amount
@@ -121,7 +128,7 @@ contract PixelPlaza_NFT is ReentrancyGuard {
 		idMarketItem[itemId].owner = payable(msg.sender); // mark buyer as new owner
 		idMarketItem[itemId].sold = true; // mark that it has been sold
 		_itemsSold.increment(); // increment the total number of Items sold by 1
-		payable(owner).transfer(listingPrice); // pay owner of contract the listing price
+		payable(pixelplaza).transfer(listingPrice); // pay pixelplaza the listing price
 	}
 
 
