@@ -1,6 +1,7 @@
 // import styles from '../styles/Home.module.css'
 import Head from "next/head";
 import Link from "next/link";
+import Nfts from "../components/nft/nfts.jsx";
 
 function Home() {
 	return (
@@ -13,96 +14,7 @@ function Home() {
 					<h2>Latest</h2>
 				</div>
 				<div className="scroller">
-					<div className="card">
-						<img lazy="true" alt="placeholder image" src="http://picsum.photos/800/600"/>
-						<div className="details">
-							<img lazy="true" alt="profile picture" src="http://picsum.photos/50/50"/>
-							<div>
-								<b>Lorem</b> by <b>Ipsum</b>
-							</div>
-						</div>
-					</div>
-					<div className="card">
-						<img lazy="true" alt="placeholder image" src="http://picsum.photos/800/400"/>
-						<div className="details">
-							<img lazy="true" alt="profile picture" src="http://picsum.photos/50/50"/>
-							<div>
-								<b>Lorem</b> by <b>Ipsum</b>
-							</div>
-						</div>
-					</div>
-					<div className="card">
-						<img lazy="true" alt="placeholder image" src="http://picsum.photos/800/900"/>
-						<div className="details">
-							<img lazy="true" alt="profile picture" src="http://picsum.photos/50/50"/>
-							<div>
-								<b>Lorem</b> by <b>Ipsum</b>
-							</div>
-						</div>
-					</div>
-					<div className="card">
-						<img lazy="true" alt="placeholder image" src="http://picsum.photos/800/1000"/>
-						<div className="details">
-							<img lazy="true" alt="profile picture" src="http://picsum.photos/50/50"/>
-							<div>
-								<b>Lorem</b> by <b>Ipsum</b>
-							</div>
-						</div>
-					</div>
-					<div className="card">
-						<img lazy="true" alt="placeholder image" src="http://picsum.photos/800/600"/>
-						<div className="details">
-							<img lazy="true" alt="profile picture" src="http://picsum.photos/50/50"/>
-							<div>
-								<b>Lorem</b> by <b>Ipsum</b>
-							</div>
-						</div>
-					</div>
-					<div className="card">
-						<img lazy="true" alt="placeholder image" src="http://picsum.photos/800/700"/>
-						<div className="details">
-							<img lazy="true" alt="profile picture" src="http://picsum.photos/50/50"/>
-							<div>
-								<b>Lorem</b> by <b>Ipsum</b>
-							</div>
-						</div>
-					</div>
-					<div className="card">
-						<img lazy="true" alt="placeholder image" src="http://picsum.photos/800/600"/>
-						<div className="details">
-							<img lazy="true" alt="profile picture" src="http://picsum.photos/50/50"/>
-							<div>
-								<b>Lorem</b> by <b>Ipsum</b>
-							</div>
-						</div>
-					</div>
-					<div className="card">
-						<img lazy="true" alt="placeholder image" src="http://picsum.photos/800/600"/>
-						<div className="details">
-							<img lazy="true" alt="profile picture" src="http://picsum.photos/50/50"/>
-							<div>
-								<b>Lorem</b> by <b>Ipsum</b>
-							</div>
-						</div>
-					</div>
-					<div className="card">
-						<img lazy="true" alt="placeholder image" src="http://picsum.photos/800/600"/>
-						<div className="details">
-							<img lazy="true" alt="profile picture" src="http://picsum.photos/50/50"/>
-							<div>
-								<b>Lorem</b> by <b>Ipsum</b>
-							</div>
-						</div>
-					</div>
-					<div className="card">
-						<img lazy="true" alt="placeholder image" src="http://picsum.photos/800/600"/>
-						<div className="details">
-							<img lazy="true" alt="profile picture" src="http://picsum.photos/50/50"/>
-							<div>
-								<b>Lorem</b> by <b>Ipsum</b>
-							</div>
-						</div>
-					</div>
+					<Nfts />
 				</div>
 				<div className="container margin">
 					<Link href="/browse">

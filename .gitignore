@@ -4,6 +4,7 @@ artifacts
 cache
 coverage
 coverage.json
+nft.config.js
 node_modules
 node_modules
 typechain

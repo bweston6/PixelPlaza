@@ -5,25 +5,29 @@
 // will compile your contracts, add the Hardhat Runtime Environment's members to the
 // global scope, and execute the script.
 const hre = require("hardhat");
+const fs = require("fs");
 
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
-  const unlockTime = currentTimestampInSeconds + ONE_YEAR_IN_SECS;
+	const PixelPlaza_NFT = await hre.ethers.getContractFactory("PixelPlaza_NFT");
+	const pixelPlazaNft = await PixelPlaza_NFT.deploy();
+	await pixelPlazaNft.deployed();
+	console.log("PixelPlaza_NFT deployed to:", pixelPlazaNft.address);
 
-  const lockedAmount = hre.ethers.utils.parseEther("1");
+	const Minter = await hre.ethers.getContractFactory("Minter");
+	const minter= await Minter.deploy(pixelPlazaNft.address);
+	await minter.deployed();
+	console.log("Minter deployed to:", minter.address);
 
-  const Lock = await hre.ethers.getContractFactory("Lock");
-  const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
-
-  await lock.deployed();
-
-  console.log("Lock with 1 ETH deployed to:", lock.address);
+	// todo - remove self-modifying code
+	fs.writeFileSync('./nft.config.js', `
+	export const nftmarketaddress = "${pixelPlazaNft.address}"
+	export const nftaddress = "${minter.address}"
+	`)
 }
 
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
 main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
+	console.error(error);
+	process.exitCode = 1;
 });
