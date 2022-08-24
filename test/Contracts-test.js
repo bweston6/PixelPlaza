@@ -1,15 +1,15 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
-describe("PixelPlaza_NFT", function () {
+describe("PixelPlazaMarketPlace", function () {
 	it("Should create and execute market sales", async function () {
-		const Market = await ethers.getContractFactory("PixelPlaza_NFT");
+		const Market = await ethers.getContractFactory("PixelPlazaMarketPlace");
 		const market = await Market.deploy();
 		await market.deployed(); // deploy the NFTMarket contract
 		const marketAddress = market.address;
 
-		const Minter= await ethers.getContractFactory("Minter");
-		const nft = await Minter.deploy(marketAddress);
+		const PixelPlazaNftMinter = await ethers.getContractFactory("PixelPlazaNftMinter");
+		const nft = await PixelPlazaNftMinter.deploy(marketAddress);
 		await nft.deployed(); // deploy the NFT contract
 		const nftContractAddress = nft.address;
 
