@@ -7,8 +7,8 @@ import {nftaddress, nftmarketaddress} from "../../nft.config";
 
 
 // import contract representations
-import Minter from "../../artifacts/contracts/Minter.sol/Minter.json";
-import PixelPlaza_NFT from "../../artifacts/contracts/PixelPlaza_NFT.sol/PixelPlaza_NFT.json";
+import Minter from "../../artifacts/contracts/PixelPlazaNftMinter.sol/NFT.json";
+import PixelPlaza_NFT from "../../artifacts/contracts/PixelPlazaMarketPlace.sol/NFTMarket.json";
 
 
 function Nfts() {

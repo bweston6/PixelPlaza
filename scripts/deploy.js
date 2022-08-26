@@ -8,15 +8,15 @@ const hre = require("hardhat");
 const fs = require("fs");
 
 async function main() {
-	const PixelPlaza_NFT = await hre.ethers.getContractFactory("PixelPlaza_NFT");
-	const pixelPlazaNft = await PixelPlaza_NFT.deploy();
+	const NFTMarket = await hre.ethers.getContractFactory("NFTMarket");
+	const pixelPlazaNft = await NFTMarket.deploy();
 	await pixelPlazaNft.deployed();
-	console.log("PixelPlaza_NFT deployed to:", pixelPlazaNft.address);
+	console.log("NFTMarket deployed to:", pixelPlazaNft.address);
 
-	const Minter = await hre.ethers.getContractFactory("Minter");
-	const minter= await Minter.deploy(pixelPlazaNft.address);
+	const NFT = await hre.ethers.getContractFactory("NFT");
+	const minter= await NFT.deploy(pixelPlazaNft.address);
 	await minter.deployed();
-	console.log("Minter deployed to:", minter.address);
+	console.log("NFT deployed to:", minter.address);
 
 	// todo - remove self-modifying code
 	fs.writeFileSync('./nft.config.js', `

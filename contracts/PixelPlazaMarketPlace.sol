@@ -1,6 +1,8 @@
 // contracts/Market.sol
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity ^0.8.4;
+//pragma solidity >=0.4.0 <0.7.0;
+
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
@@ -51,8 +53,8 @@ contract NFTMarket is
 
     // Assume tokenUri doesn't change, so don't add to other events
     event MarketItemCreated(
-        string title;
-        string description;
+        string title,
+        string description,
         uint256 indexed itemId,
         address indexed nftContract,
         uint256 indexed tokenId,
@@ -66,8 +68,8 @@ contract NFTMarket is
     );
 
     event MarketItemListed(
-        string title;
-        string description;
+        string title,
+        string description,
         uint256 indexed itemId,
         address indexed nftContract,
         uint256 indexed tokenId,
@@ -80,8 +82,8 @@ contract NFTMarket is
     );
 
     event MarketItemPriceChanged(
-        string title;
-        string description;
+        string title,
+        string description,
         uint256 indexed itemId,
         address indexed nftContract,
         uint256 indexed tokenId,
@@ -97,21 +99,22 @@ contract NFTMarket is
     // (marketAddress = from, owner = to)
     //
     // Seller here is the person who listed, not the address of the market
-    event MarketItemSold(
+    struct MarketItemSold{
         string title;
         string description;
-        uint256 indexed itemId,
-        address nftContract,
-        uint256 indexed tokenId,
-        uint256 royalty,
-        address indexed seller,
-        address owner,
-        address creator,
-        uint256 price,
-        bool sold,
-        address marketAddress
-    );
-
+        uint256 itemId;
+        address  nftContract;
+        uint256 tokenId;
+        uint256 royalty;
+        address  seller;
+        address owner;
+        address creator;
+        uint256 price;
+        bool sold;
+        address marketAddress;
+    }
+    
+    mapping(uint256 => MarketItemSold) private idToMarketItemSold;
     /**
      * Returns the listing price of the contract
      */
@@ -136,14 +139,14 @@ contract NFTMarket is
         uint256 tokenId,
         uint256 price,
         uint256 royalty,
-        string title,
-        string description
+        string memory title,
+        string  memory description
     ) public payable nonReentrant {
         require(price >= 1, "Price must be at least 1 MATIC");
         require(msg.value == mintingRoyalty,"Price must be equal to listing price"); //User sending in the transaction must also send in some payment for our royalty. (msg.value)
-        require(royalty <= 10, "Royalty fees are at most 10%")
+        require(royalty <= 10, "Royalty fees are at most 10%");
         uint256 itemId = _itemIds.current();
-
+        string memory tokenUri = ERC721URIStorage(nftContract).tokenURI(tokenId);
         idToMarketItem[itemId] = MarketItem(
             title,
             description,
@@ -158,10 +161,11 @@ contract NFTMarket is
             // Creator
             payable(msg.sender),
             price,
-            false
+            false,
+            tokenUri // must have a token URI here
         );
 
-        string memory tokenUri = ERC721URIStorage(nftContract).tokenURI(tokenId);
+        
         
         //Creating market item, sending the nft contract from Seller (msg.sender), to the market (addres(this)).
         IERC721(nftContract).safeTransferFrom(msg.sender,address(this),tokenId);
@@ -187,7 +191,6 @@ contract NFTMarket is
             tokenUri
         );
     }
-
     /**
      * Creates the sale of a marketplace item
      * Transfers ownership of the item, as well as funds between parties
@@ -197,18 +200,20 @@ contract NFTMarket is
         payable
         nonReentrant
     {
+        //address ourContract = nftContract;
         uint256 price = idToMarketItem[itemId].price;
         uint256 tokenId = idToMarketItem[itemId].tokenId;
         uint256 royalty = idToMarketItem[itemId].royalty;
-        string title = idToMarketItem[itemId].title;
-        string description = idToMarketItem[itemId].description;
+        string memory title = idToMarketItem[itemId].title;
+        string memory description = idToMarketItem[itemId].description;
+        address currentOwner =  idToMarketItem[itemId].owner;
         require(
             msg.value == price,
             "Please submit the asking price in order to complete the purchase"
         );
 
         // Market cut is 2.5% of the sale
-        uint256 marketCut = (msg.value).div(100).mul(2.5);
+        uint256 marketCut = (msg.value).div(100).mul(25).div(10);
         uint256 sellerCut = msg.value.sub(marketCut);
         uint256 creatorCut = 0;
         //On the first sale, the creator does not get any royalties.
@@ -235,15 +240,15 @@ contract NFTMarket is
         // Transfer money from this contract to the contract's owner!
         payable(owner()).sendValue(getBalance()); //Transfering leftover money to us, the owner of the contract.
 
-        emit MarketItemSold(
+        idToMarketItemSold[itemId] = MarketItemSold(
             title,
             description,
             itemId,
             nftContract,
-            idToMarketItem[itemId].tokenId,
+            tokenId,
             royalty,
             // Old seller is recorded
-            oldSeller,
+            idToMarketItem[itemId].seller,
             // This is where it does get slightly confusing, again.
             // Instead of being us as the owner, as it would be on a first time listing, the owner is now the new owner of the NFT, and will remain that way
             // Until they decide to relist the item on our site.
@@ -254,6 +259,8 @@ contract NFTMarket is
             true,
             address(this)
         );
+
+        
     }
 
     /**
@@ -266,8 +273,8 @@ contract NFTMarket is
         uint256 itemId,
         uint256 price,
         uint256 royalty,
-        string title,
-        string description,
+        string memory title,
+        string  memory description
         //Reentrancy guard prevents attacks, also stops out anyone listing for too low prices.
     ) public payable nonReentrant {
         require(price > 0, "Price must be at least 1 wei");
@@ -305,8 +312,8 @@ contract NFTMarket is
         uint256 itemId,
         uint256 price,
         uint256 royalty,
-        string title,
-        string description
+        string memory title,
+        string  memory description
         //Reentrance guard again
     ) public payable nonReentrant {
         require(price > 0, "Price must be at least 1 wei");
