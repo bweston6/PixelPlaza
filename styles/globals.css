@@ -161,6 +161,12 @@ body > #__next {
 }
 
 
+/* Links */
+p > a:where(:link,:visited) {
+	color: var(--clr-accent-yellow);
+}
+
+
 /* Utility Classes */
 .box {
 	background-color: var(--clr-grey-100);
@@ -193,7 +199,7 @@ body > #__next {
 	justify-content: center;
 }
 .margin {
-	padding-block: 2rem;
+	margin-block: 2rem;
 }
 .margin-top {
 	margin-top: 2rem;
@@ -213,4 +219,9 @@ body > #__next {
 .wrap-text {
 	flex-grow: 1;
 	flex-basis: 40ch;
+}
+.h-center-align {
+	align-items: center;
+	display: flex;
+	gap: 1rem;
 }

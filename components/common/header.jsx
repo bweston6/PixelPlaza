@@ -15,7 +15,7 @@ function Header() {
 					<ul className="even-columns small-gap" role="list">
 						<li><Link href="/browse"><a>Browse</a></Link></li>
 						<li><Link href="/create"><a>Create</a></Link></li>
-						<li><Link href="/login"><a><i className="fa-solid fa-user-large clr-accent-yellow"></i></a></Link></li>
+						<li><Link href="/account"><a><i className="fa-solid fa-user-large clr-accent-yellow"></i></a></Link></li>
 					</ul>
 				</nav>
 			</div>
