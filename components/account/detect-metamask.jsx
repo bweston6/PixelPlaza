@@ -3,6 +3,8 @@ import ConnectAccount from "./connect-account"
 import Account from "./account"
 import ChangeNetwork from "./change-network"
 
+import Script from "next/script"
+
 import { useEffect } from "react"
 import { useState} from "react"
 
@@ -12,55 +14,57 @@ function DetectMetamask() {
 	const [ethereum, setEthereum] = useState(null)
 	const [currentAccount, setCurrentAccount] = useState(null)
 
-	function handleAccountsChanged(accounts) {
-		if (accounts.length === 0) {
-			// MetaMask is locked or the user has not connected any accounts
-			console.log('Please connect to MetaMask.');
-		} else if (accounts[0] !== currentAccount) {
-			setCurrentAccount(accounts[0]);
-		}
-	}
-
-
 	useEffect(() => {
+		// set ethereum object
 		setEthereum(window.ethereum)
-	}, [])
-
-	useEffect(() => {
-		const ethereum = window.ethereum;
-
-		/***********************************************************/
-		/* Handle user accounts and accountsChanged (per EIP-1193) */
-		/***********************************************************/
-		ethereum
-			.request({ method: 'eth_accounts' })
-			.then(handleAccountsChanged)
+		// get account object 
+		const fetchAccount = async () => {
+			const accounts = await window.ethereum
+				.request({ method: 'eth_accounts' });
+			if (accounts.length > 0 && accounts[0] !== currentAccount) {
+				setCurrentAccount(accounts[0]);
+			}
+		}
+		fetchAccount()
 			.catch((err) => {
 				// Some unexpected error.
 				// For backwards compatibility reasons, if no accounts are available,
 				// eth_accounts will return an empty array.
 				console.error(err);
 			});
-
-		// Note that this event is emitted on page load.
-		// If the array of accounts is non-empty, you're already
-		// connected.
-		ethereum.on('accountsChanged', handleAccountsChanged);
-
-		// For now, 'eth_accounts' will continue to always return an array
 	}, [])
 
 	if (ethereum == null || ethereum.isMetaMask == false) {
-		return(<GetMetamask />);
+		return(
+			<>
+			<Script src="/scripts/metamask.js" />
+			<GetMetamask />
+			</>
+		);
 	}
 	// todo - change to polygon mainnet
 	if (ethereum.chainId != "0x539") {
-		return(<ChangeNetwork />)
+		return(
+			<>
+			<Script src="/scripts/metamask.js" />
+			<ChangeNetwork />
+			</>
+		);
 	}
 	if (currentAccount == null) {
-		return(<ConnectAccount />);
+		return(
+			<>
+			<Script src="/scripts/metamask.js" />
+			<ConnectAccount />
+			</>
+		);
 	}
-	return(<Account />);
+	return(
+		<>
+		<Script src="/scripts/metamask.js" />
+		<Account currentAccount={currentAccount} />
+		</>
+	);
 }
 
 export default DetectMetamask;
