@@ -1,34 +1,61 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# PixelPlaza
 
-## Getting Started
+Pixel Plaza is a legendary marketplace for selling your pixel art NFTs. Draw, buy, sell - the world's best pixel art NFT marketplace.
 
-First, run the development server:
+## Deploy Locally
+To run the server locally:
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+1. Install all dependencies using npm:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+	```
+	$ npm install
+	```
+1. Run a local JSON-RPC server using:
+	
+	```
+	$ npx hardhat node
+	```
+	
+	---
+	You should keep this open while running the server.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+	---
+1. Deploy the app keys to the JSON-RPC server:
+	
+	```
+	$ npx hardhat run scripts/deploy.js --network localhost
+	```
+1. Run the server using:
+	
+	```
+	$ npm run dev
+	```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+Open http://localhost:3000 with your browser to see the result.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Branding
+* Site branding assets such as logos are stored in [public/images](https://github.com/bweston6/PixelPlaza/tree/dev-backend/public/images).
+* The company name should be stylised as "PixelPlaza".
+* Company branding, including logo and name, should be represented such that contrast with the background is WCAG AAA compliant.
+* Company branding should be coloured in combinations of:
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+	| Logo | Company Name |
+	| :-- | :-- |
+	| `--clr-accent-yellow` | `--clr-accent-yellow` |
+	| `--clr-accent-yellow` | `--clr-grey-900` |
+	| `--clr-grey-900` | `--clr-grey-900` |
+	| `--clr-grey-100` | `--clr-grey-100` |
+* Brand colour are as follows:
+	
+	```css
+	--clr-accent-yellow: hsl(52, 96%, 69%);
+	--clr-accent-blue: hsl(172, 23%, 68%);
+	--clr-accent-salmon: hsl(7, 80%, 64%);
+	--clr-grey-100: hsl(0, 0%, 10%);
+	--clr-grey-300: hsl(0, 0%, 15%);
+	--clr-grey-500: hsl(0, 0%, 50%);
+	--clr-grey-700: hsl(0, 0%, 70%);
+	--clr-grey-900: hsl(0, 0%, 100%);
+	```
+	
+	where `--clr-accent-yellow` is the main brand colour, other accent colours are for minimal decoration, and greys are for backgrounds and text.
