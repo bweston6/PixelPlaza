@@ -12,6 +12,12 @@ To run the server locally:
    $ npm install
    ```
 
+1. Initialise the database by running:
+
+   ```
+   $ npx prisma migrate dev --name init
+   ```
+
 1. Run a local JSON-RPC server using:
 
    ```
