@@ -8,26 +8,29 @@ const hre = require("hardhat");
 const fs = require("fs");
 
 async function main() {
-	const NFTMarket = await hre.ethers.getContractFactory("NFTMarket");
-	const pixelPlazaNft = await NFTMarket.deploy();
-	await pixelPlazaNft.deployed();
-	console.log("NFTMarket deployed to:", pixelPlazaNft.address);
+  const NFTMarket = await hre.ethers.getContractFactory("NFTMarket");
+  const pixelPlazaNft = await NFTMarket.deploy();
+  await pixelPlazaNft.deployed();
+  console.log("NFTMarket deployed to:", pixelPlazaNft.address);
 
-	const NFT = await hre.ethers.getContractFactory("NFT");
-	const minter= await NFT.deploy(pixelPlazaNft.address);
-	await minter.deployed();
-	console.log("NFT deployed to:", minter.address);
+  const NFT = await hre.ethers.getContractFactory("NFT");
+  const minter = await NFT.deploy(pixelPlazaNft.address);
+  await minter.deployed();
+  console.log("NFT deployed to:", minter.address);
 
-	// todo - remove self-modifying code
-	fs.writeFileSync('./nft.config.js', `
+  // todo - remove self-modifying code
+  fs.writeFileSync(
+    "./nft.config.js",
+    `
 	export const nftmarketaddress = "${pixelPlazaNft.address}"
 	export const nftaddress = "${minter.address}"
-	`)
+	`
+  );
 }
 
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
 main().catch((error) => {
-	console.error(error);
-	process.exitCode = 1;
+  console.error(error);
+  process.exitCode = 1;
 });
