@@ -11,6 +11,7 @@
   "dependencies": {
     "@openzeppelin/contracts": "^4.7.3",
     "@openzeppelin/contracts-upgradeable": "^4.7.3",
+    "@prisma/client": "^4.3.1",
     "axios": "^0.27.2",
     "chai": "^4.3.6",
     "next": "12.2.3",
@@ -25,6 +26,7 @@
     "eslint": "8.21.0",
     "eslint-config-next": "12.2.3",
     "ethers": "^5.6.9",
-    "hardhat": "^2.10.1"
+    "hardhat": "^2.10.1",
+    "prisma": "^4.3.1"
   }
 }

@@ -8,6 +8,8 @@ import Script from "next/script"
 import { useEffect } from "react"
 import { useState} from "react"
 
+import axios from "axios"
+
 
 function DetectMetamask() {
 	// get ethereum object from metamask
@@ -59,6 +61,17 @@ function DetectMetamask() {
 			</>
 		);
 	}
+	// create account and return account page
+	axios.post(
+		"/api/createUser", {
+			walletId: currentAccount,
+		})
+		.catch(function (error) {
+			if (error.response.status != 409) {
+				throw error;
+			}
+		});
+
 	return(
 		<>
 		<Script src="/scripts/metamask.js" />
