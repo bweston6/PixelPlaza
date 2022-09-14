@@ -1,8 +1,10 @@
 import { prisma } from "prisma/db.ts";
 
 async function prismaCheckUser(walletId) {
-  return await prisma.$exists.user({
-    walletId: user.walletId,
+  return await prisma.user.findUnique({
+		where: {
+			walletId: walletId,
+		}
   });
 }
 
@@ -38,16 +40,16 @@ export default function createUser(req, res) {
     });
   if (userExists) {
     res.status(409).json({ error: "user already exists" });
+  } else {
+    // create user
+    prismaCreateUser(user.walletId)
+      .then(async () => {
+        await prisma.$disconnect();
+      })
+      .catch(async (e) => {
+        res.status(500).json({ error: "database error" });
+        await prisma.$disconnect();
+      });
+    res.status(201).json({ message: "user created" });
   }
-
-  // create user
-  prismaCreateUser(user.walletId)
-    .then(async () => {
-      await prisma.$disconnect();
-    })
-    .catch(async (e) => {
-      res.status(500).json({ error: "database error" });
-      await prisma.$disconnect();
-    });
-  res.status(201).json({ message: "user created" });
 }
