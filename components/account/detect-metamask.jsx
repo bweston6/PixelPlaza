@@ -17,66 +17,70 @@ function DetectMetamask() {
 
   useEffect(() => {
     // set ethereum object
-    setEthereum(window.ethereum);
-    // get account object
-    const fetchAccount = async () => {
-      const accounts = await window.ethereum.request({
-        method: "eth_accounts",
-      });
-      if (accounts.length > 0 && accounts[0] !== currentAccount) {
-        setCurrentAccount(accounts[0]);
-      }
-    };
-    fetchAccount().catch((err) => {
-      // Some unexpected error.
-      // For backwards compatibility reasons, if no accounts are available,
-      // eth_accounts will return an empty array.
-      console.error(err);
-    });
-  }, []);
+		if (window.ethereum) {
+			setEthereum(window.ethereum);
+			// get account object
+			const fetchAccount = async () => {
+				const accounts = await window.ethereum.request({
+					method: "eth_accounts",
+				});
+				if (accounts.length > 0 && accounts[0] !== currentAccount) {
+					setCurrentAccount(accounts[0]);
+				}
+			};
+			fetchAccount().catch((err) => {
+				// Some unexpected error.
+				// For backwards compatibility reasons, if no accounts are available,
+				// eth_accounts will return an empty array.
+				console.error(err);
+			});
+		} else {
+			setEthereum(null);
+		}
+	}, []);
 
-  if (ethereum == null || ethereum.isMetaMask == false) {
-    return (
-      <>
-        <Script src="/scripts/metamask.js" />
-        <GetMetamask />
-      </>
-    );
-  }
-  // todo - change to polygon mainnet
-  if (ethereum.chainId != "0x539") {
-    return (
-      <>
-        <Script src="/scripts/metamask.js" />
-        <ChangeNetwork />
-      </>
-    );
-  }
-  if (currentAccount == null) {
-    return (
-      <>
-        <Script src="/scripts/metamask.js" />
-        <ConnectAccount />
-      </>
-    );
-  }
-  // create account and return account page
-  axios
-    .post("/api/createUser", {
-      walletId: currentAccount,
-    })
-    .catch(function (error) {
-      if (error.response.status != 409) {
-        throw error;
-      }
-    });
+	if (ethereum == null || ethereum.isMetaMask == false) {
+		return (
+			<>
+			<Script src="/scripts/metamask.js" />
+			<GetMetamask />
+			</>
+		);
+	}
+	// todo - change to polygon mainnet
+	if (ethereum.chainId != "0x539") {
+		return (
+			<>
+			<Script src="/scripts/metamask.js" />
+			<ChangeNetwork />
+			</>
+		);
+	}
+	if (currentAccount == null) {
+		return (
+			<>
+			<Script src="/scripts/metamask.js" />
+			<ConnectAccount />
+			</>
+		);
+	}
+	// create account and return account page
+	axios
+		.post("/api/createUser", {
+			walletId: currentAccount,
+		})
+		.catch(function (error) {
+			if (error.response.status != 409) {
+				throw error;
+			}
+		});
 
-  return (
-    <>
-      <Script src="/scripts/metamask.js" />
-      <Account currentAccount={currentAccount} />
-    </>
-  );
+	return (
+		<>
+		<Script src="/scripts/metamask.js" />
+		<Account currentAccount={currentAccount} />
+		</>
+	);
 }
 
 export default DetectMetamask;

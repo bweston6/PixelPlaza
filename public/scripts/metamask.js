@@ -4,7 +4,9 @@
 /* Handle chain (network) and chainChanged (per EIP-1193) */
 /**********************************************************/
 
-ethereum.on("chainChanged", handleChainChanged);
+if (window.ethereum){
+	ethereum.on("chainChanged", handleChainChanged);
+}
 
 function handleChainChanged(_chainId) {
   // We recommend reloading the page, unless you must do otherwise
@@ -18,7 +20,9 @@ function handleChainChanged(_chainId) {
 // Note that this event is emitted on page load.
 // If the array of accounts is non-empty, you're already
 // connected.
-ethereum.on("accountsChanged", handleAccountsChanged);
+if (window.ethereum){
+	ethereum.on("accountsChanged", handleAccountsChanged);
+}
 
 // For now, 'eth_accounts' will continue to always return an array
 // currentAccount is created using react state
