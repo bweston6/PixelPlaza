@@ -9,24 +9,20 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^4.7.3",
-    "@openzeppelin/contracts-upgradeable": "^4.7.3",
-    "@prisma/client": "^4.3.1",
-    "axios": "^0.27.2",
-    "chai": "^4.3.6",
-    "next": "12.2.3",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "web3modal": "^1.9.8"
+    "@openzeppelin/contracts": "^4",
+    "@openzeppelin/contracts-upgradeable": "^4",
+    "@prisma/client": "^4",
+    "axios": "^1",
+    "chai": "^4",
+    "next": "^12",
+    "react": "^18",
+    "react-dom": "^18",
+    "web3modal": "^1"
   },
   "devDependencies": {
-    "@nomicfoundation/hardhat-chai-matchers": "^1.0.2",
-    "@nomicfoundation/hardhat-toolbox": "^1.0.2",
-    "@nomiclabs/hardhat-ethers": "^2.1.0",
-    "eslint": "8.21.0",
-    "eslint-config-next": "12.2.3",
-    "ethers": "^5.6.9",
-    "hardhat": "^2.10.1",
-    "prisma": "^4.3.1"
+    "@nomicfoundation/hardhat-toolbox": "^2",
+    "ethers": "^5",
+    "hardhat": "^2",
+    "prisma": "^4"
   }
 }
